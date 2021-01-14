@@ -1,9 +1,47 @@
 package main
 
-import "github.com/pallat/20210114/math"
+import (
+	"fmt"
+	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/pallat/20210114/fizzbuzz"
+)
 
 func main() {
-	println(math.Power(2, 4))
+	// Echo instance
+	e := echo.New()
+
+	// Middleware
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	// Routes
+	e.GET("/fizzbuzz/:number", fizzbuzzHandler)
+
+	// Start server
+	e.Logger.Fatal(e.Start(":1323"))
+}
+
+// Handler
+func fizzbuzzHandler(c echo.Context) error {
+	number := c.Param("number")
+
+	n, err := strconv.Atoi(number)
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	return c.String(http.StatusOK, fizzbuzz.Say(n))
+}
+
+func myPrintln(n int) {
+	time.Sleep(time.Millisecond * 100)
+
+	fmt.Println(n)
 }
 
 func prime(n int) {
