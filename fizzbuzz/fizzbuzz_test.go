@@ -48,3 +48,13 @@ func TestFizzBuzzGiven4(t *testing.T) {
 		t.Errorf("given %d want %q bug get %q\n", given, want, get)
 	}
 }
+func TestFizzBuzzGiven5(t *testing.T) {
+	given := 5
+	want := "Buzz"
+
+	get := fizzbuzz.Say(given)
+
+	if want != get {
+		t.Errorf("given %d want %q bug get %q\n", given, want, get)
+	}
+}
